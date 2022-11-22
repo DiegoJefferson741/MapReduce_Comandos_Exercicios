@@ -130,6 +130,7 @@ public static class IntSumReducer
 
                   sum += val.get();
                   // Intera contador count++
+                  count++;
             }
 
             Media = sun / count;
