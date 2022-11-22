@@ -25,36 +25,17 @@ public class WordCount {
 
 
 
-	for each documento in conj {
-		 palavras = tokenize(document);
-		 for each p in palavras {
-		       contPalavra[p]++;
-		 }
-	  }
-
-
-	IntWritable one = new IntWritable(var);
-		word.set("Linhas:");
-		 context.write(word, one);
-
-		while (itr.hasMoreTokens()) {
-		 word.set("Palavra");
-		 itr.nextToken();
-		 context.write(word, one);
-		}
-
-
 
 
 /*
-1-Edite o mapeador para contar linhas ao invés de palavras
+//1-Edite o mapeador para contar linhas ao invés de palavras
 	
       word.set("Linhas:");
       context.write(word, one);
 */
 
 /*
-2.Edite o mapeador para contar o número de todas as palavras (não de cada palavra)
+//2.Edite o mapeador para contar o número de todas as palavras (não de cada palavra)
 
 	while (itr.hasMoreTokens()) {
          word.set("Palavra");
@@ -65,7 +46,7 @@ public class WordCount {
 */
 
 /*
-3.Edite o mapeador para contar linhas e palavras
+//3.Edite o mapeador para contar linhas e palavras
 
 	word.set("Linhas:");
 	 context.write(word, one);
@@ -78,10 +59,10 @@ public class WordCount {
 */
 
 /*
-4.Limpe o resultado do contador de palavras
-Atualmente os resultados da contagem de palavras são muito redundantes porque as
-palavras podem conter caracteres especiais (Ex.: “Caesars., Caesars’, “Caesars,”)
-Remova esses caracteres especiais.
+//4.Limpe o resultado do contador de palavras
+//Atualmente os resultados da contagem de palavras são muito redundantes porque as
+//palavras podem conter caracteres especiais (Ex.: “Caesars., Caesars’, “Caesars,”)
+//Remova esses caracteres especiais.
 
 	while (itr.hasMoreTokens()) {
          word.set(itr.nextToken().replaceAll("[^0-9a-zA-Z]+", ""));
@@ -92,8 +73,8 @@ Remova esses caracteres especiais.
 
 
 /*
-5.Maiúsculas e minúsculas. Algumas palavras podem conter caracteres maiúsculos e/ou minúsculos
-Conte as palavras ignorando esses casos.
+//5.Maiúsculas e minúsculas. Algumas palavras podem conter caracteres maiúsculos e/ou minúsculos
+//Conte as palavras ignorando esses casos.
 
 	while (itr.hasMoreTokens()) {
          word.set(itr.nextToken().toLowerCase());
@@ -103,14 +84,35 @@ Conte as palavras ignorando esses casos.
 */
 
 
-/*
-6.Faça a média de palavras por linha
 
+
+
+//6.Faça a média de palavras por linha
+
+	word.set("Media");
+	IntWrible qtde = new IntWrible(itr.countTokens());
+
+	context.write(word, qtde);
+		
+        }
+
+	
+
+
+
+
+
+
+/*
+
+	for each documento in conj {
+		 palavras = tokenize(document);
+		 for each p in palavras {
+		       contPalavra[p]++;
+		 }
+	  }
 
 */
-
-
-
 
 
 
@@ -140,11 +142,22 @@ Conte as palavras ignorando esses casos.
     public void reduce(Text key, Iterable<IntWritable> values,
                        Context context
                        ) throws IOException, InterruptedException {
+
+	//(Media, [20, 15, 10])
+
       int sum = 0;
+	// Cria contador e inicia em 0
       for (IntWritable val : values) {
+ 
+	val++;
+
         sum += val.get();
+	//Intera contador count++
       }
-      result.set(sum);
+	//Media = sun/count
+
+      //result.set(sum);
+	result.set(media);
       context.write(key, result);
     }
   }
@@ -163,3 +176,8 @@ Conte as palavras ignorando esses casos.
     System.exit(job.waitForCompletion(true) ? 0 : 1);
   }
 }
+
+
+
+
+
