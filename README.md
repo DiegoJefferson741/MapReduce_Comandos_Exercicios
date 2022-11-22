@@ -3,7 +3,7 @@ Lista de Exercicicos e Comandos MapReduce
 
 Codigo WordCount:
 
-
+/*
 import java.io.IOException;
 import java.util.StringTokenizer;
 
@@ -184,6 +184,6 @@ public class WordCount {
 }
 
 
-
+*/
 
 
